@@ -1,0 +1,84 @@
+.start-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 60px); /* Ajusta según el tamaño del encabezado */
+}
+
+#start-button {
+    background-color: #00796b; /* Verde para el botón */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 15px 30px;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+#start-button:hover {
+    background-color: #004d40; /* Color más oscuro en hover */
+}
+
+.trivia-container {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    width: 300px;
+    text-align: center;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #e0f7fa; /* Color suave para recordar el reciclaje */
+    color: #00796b; /* Verde oscuro */
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #004d40; /* Verde más oscuro */
+    color: white;
+    padding: 10px 0;
+    text-align: center;
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 60px); /* Ajusta según el tamaño del encabezado */
+}
+
+.trivia-container {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    width: 300px;
+    text-align: center;
+}
+
+button {
+    background-color: #00796b; /* Verde para los botones */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 10px;
+    margin: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #004d40; /* Color más oscuro en hover */
+}
+
+#result {
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+#score {
+    margin-top: 10px;
+}
