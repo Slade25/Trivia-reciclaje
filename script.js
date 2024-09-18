@@ -51,12 +51,11 @@ const questions = [
     }
 ];
 
-
 let currentQuestionIndex = 0;
 let score = 0;
+let playerName = '';
 
 function loadQuestion() {
-    shuffleArray(questions); // Mezcla las preguntas cada vez que se carga
     const question = questions[currentQuestionIndex];
     document.getElementById('question').textContent = question.question;
     const options = document.getElementById('options');
@@ -65,7 +64,6 @@ function loadQuestion() {
         options.innerHTML += `<li><button onclick="checkAnswer('${key}')">${key}. ${value}</button></li>`;
     }
 }
-
 
 function checkAnswer(selectedOption) {
     const correctAnswer = questions[currentQuestionIndex].answer;
@@ -82,16 +80,18 @@ function checkAnswer(selectedOption) {
 
     currentQuestionIndex++;
     if (currentQuestionIndex < questions.length) {
-        setTimeout(loadQuestion, 1000); // Cargar la siguiente pregunta después de un breve retraso
+        setTimeout(loadQuestion, 1000);
     } else {
-        setTimeout(showFinalScore, 1000); // Mostrar puntaje final después de todas las preguntas
+        setTimeout(showFinalScore, 1000);
     }
 }
 
 function startTrivia() {
+    playerName = prompt('Por favor, ingresa tu nombre:');
     document.getElementById('start-container').style.display = 'none';
     document.getElementById('trivia-container').style.display = 'block';
-    loadQuestion(); // Cargar la primera pregunta
+    shuffleQuestions();
+    loadQuestion();
 }
 
 function showFinalScore() {
@@ -100,24 +100,51 @@ function showFinalScore() {
     document.getElementById('result').textContent = `Tu puntaje final es ${score} de ${questions.length}.`;
     document.getElementById('result').style.color = 'black';
     document.getElementById('score').textContent = `Tu puntaje final es ${score} de ${questions.length}.`;
-    document.getElementById('restart-button').style.display = 'block'; // Mostrar el botón de reinicio
+    
+    saveScore(playerName, score);
+    showLeaderboard();
+    document.getElementById('trivia-container').style.display = 'none';
+    document.getElementById('leaderboard-container').style.display = 'block';
 }
 
-
-function restartGame() {
-    shuffleArray(questions); // Mezcla las preguntas al reiniciar
+function returnToStart() {
     currentQuestionIndex = 0;
     score = 0;
-    loadQuestion();
-    document.getElementById('result').textContent = '';
-    document.getElementById('score').textContent = '';
+    document.getElementById('leaderboard-container').style.display = 'none';
+    document.getElementById('start-container').style.display = 'block';
 }
 
-function shuffleArray(array) {
-    for (let i = array.length - 1; i > 0; i--) {
+function resetLeaderboard() {
+    localStorage.removeItem('leaderboard');
+    showLeaderboard();
+    returnToStart();
+}
+
+function saveScore(name, score) {
+    let leaderboard = JSON.parse(localStorage.getItem('leaderboard')) || [];
+    leaderboard.push({ name: name, score: score });
+    leaderboard.sort((a, b) => b.score - a.score);
+    localStorage.setItem('leaderboard', JSON.stringify(leaderboard));
+}
+
+function showLeaderboard() {
+    const leaderboard = JSON.parse(localStorage.getItem('leaderboard')) || [];
+    const leaderboardTable = document.getElementById('leaderboard').getElementsByTagName('tbody')[0];
+    leaderboardTable.innerHTML = '';
+    leaderboard.forEach(entry => {
+        const row = leaderboardTable.insertRow();
+        const cellName = row.insertCell(0);
+        const cellScore = row.insertCell(1);
+        cellName.textContent = entry.name;
+        cellScore.textContent = entry.score;
+    });
+}
+
+function shuffleQuestions() {
+    for (let i = questions.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
+        [questions[i], questions[j]] = [questions[j], questions[i]];
     }
 }
 
-window.onload = loadQuestion;
+window.onload = shuffleQuestions;
