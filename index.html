@@ -25,7 +25,23 @@
             </ul>
             <p id="result"></p>
             <p id="score"></p>
-            <button id="restart-button" onclick="restartGame()" style="display: none;">Reiniciar Trivia</button>
+        </div>
+        
+        <div id="leaderboard-container" class="leaderboard-container" style="display: none;">
+            <h2>Tabla de Posiciones</h2>
+            <table id="leaderboard">
+                <thead>
+                    <tr>
+                        <th>Jugador</th>
+                        <th>Puntaje</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Los puntajes se agregarán aquí dinámicamente -->
+                </tbody>
+            </table>
+            <button id="restart-button" onclick="returnToStart()">Volver a Inicio</button>
+            <button id="reset-leaderboard-button" onclick="resetLeaderboard()">Reiniciar Completo</button>
         </div>
     </main>
     
